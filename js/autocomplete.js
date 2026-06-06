@@ -18,10 +18,37 @@ class Autocomplete {
     });
   }
 
+  _validate(query) {
+    const errors = [];
+    if (query.length > 0 && query.length < 2) {
+      errors.push("Enter at least 2 characters");
+    }
+    // Check for valid city name characters (letters, spaces, hyphens, apostrophes)
+    if (query.length >= 2 && !/^[a-zA-Z\s\-.'()]+$/.test(query)) {
+      errors.push("Only letters and spaces allowed");
+    }
+    return errors;
+  }
+
+  _showValidation(errors) {
+    if (errors.length > 0) {
+      this.input.classList.add("error");
+      this.input.setCustomValidity(errors[0]);
+    } else {
+      this.input.classList.remove("error");
+      this.input.setCustomValidity("");
+    }
+  }
+
   _onInput() {
     const q = this.input.value.trim();
     document.getElementById("searchClear").hidden = q.length === 0;
     clearTimeout(this._t);
+    
+    // Instant validation
+    const errors = this._validate(q);
+    this._showValidation(errors);
+    if (errors.length > 0) { this.hide(); this.lastQuery = ""; return; }
     
     if (this._abort) this._abort.abort();
     if (q.length < 2) { this.hide(); this.lastQuery = ""; return; }

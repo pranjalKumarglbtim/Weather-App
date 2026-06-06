@@ -369,6 +369,10 @@ body::after {
   border-color: var(--accent-2);
   box-shadow: 0 0 0 3px rgba(56,189,248,0.2), 0 8px 24px rgba(56,189,248,0.12);
 }
+.search input.error {
+  border-color: var(--danger) !important;
+  box-shadow: 0 0 0 3px rgba(239,68,68,0.2) !important;
+}
 .search-icon { color: var(--text-muted); flex-shrink: 0; }
 .search input {
   flex: 1; background: none; border: none; outline: none;
