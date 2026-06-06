@@ -119,3 +119,4 @@ Deploy the folder to any static host:
 
 MIT — Built with ☀️ for portfolios and learning.
 
+
