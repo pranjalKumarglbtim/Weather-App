@@ -4,6 +4,12 @@ A production-quality, portfolio-worthy weather application built with **pure HTM
 
 ![Skycast](https://raw.githubusercontent.com/pranjalKumarglbtim/Weather-App/main/Screenshot%202026-06-06%20155733.png)
 
+![Screenshot 2](https://raw.githubusercontent.com/pranjalKumarglbtim/Weather-App/main/Screenshot%202026-06-06%20155659.png)
+
+![Screenshot 3](https://raw.githubusercontent.com/pranjalKumarglbtim/Weather-App/main/Screenshot%202026-06-06%20155632.png)
+
+![Screenshot 4](https://raw.githubusercontent.com/pranjalKumarglbtim/Weather-App/main/Screenshot%202026-06-06%20155602.png)
+
 ## ✨ Features
 
 - 🌤 **Current weather** — temperature, feels like, humidity, wind, pressure, visibility, sunrise/sunset, cloud cover
