@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Skycast — A premium weather dashboard with real-time forecasts, beautiful animations, and modern design." />
+  <title>Skycast — Premium Weather Dashboard</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/weather-icons.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body data-theme="dark" data-weather="clear">
+  <!-- Animated weather background -->
+  <div class="weather-bg" aria-hidden="true">
+    <div class="bg-gradient"></div>
+    <div class="bg-layer stars"></div>
+    <div class="bg-layer clouds"></div>
+    <div class="bg-layer rain"></div>
+    <div class="bg-layer snow"></div>
+    <div class="bg-layer sun-glow"></div>
+    <div class="bg-layer lightning"></div>
+  </div>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar" aria-label="Favorites and history">
+    <div class="sidebar-header">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 1 0-1.5-8.74A6 6 0 0 0 4 12a5 5 0 0 0 5 5h8.5z"/><circle cx="18" cy="6" r="2.5"/></svg>
+        </div>
+        <span class="brand-name">Skycast</span>
+      </div>
+      <button class="icon-btn sidebar-close" id="sidebarClose" aria-label="Close sidebar">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <section class="sidebar-section">
+      <div class="sidebar-section-head">
+        <h3>Favorites</h3>
+        <span class="badge" id="favCount">0</span>
+      </div>
+      <ul class="fav-list" id="favList" aria-live="polite"></ul>
+      <p class="empty-msg" id="favEmpty">No favorites yet. Tap the star on any city to save it.</p>
+    </section>
+
+    <section class="sidebar-section">
+      <div class="sidebar-section-head">
+        <h3>Recent searches</h3>
+        <button class="text-btn" id="clearHistory">Clear</button>
+      </div>
+      <ul class="history-list" id="historyList"></ul>
+      <p class="empty-msg" id="historyEmpty">Your recent searches will appear here.</p>
+    </section>
+
+    <div class="sidebar-footer">
+      <p>Skycast Weather</p>
+    </div>
+  </aside>
+
+  <main class="app" id="app">
+    <!-- Top bar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="icon-btn" id="sidebarToggle" aria-label="Open sidebar">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+        <div class="brand brand-mobile">
+          <div class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 1 0-1.5-8.74A6 6 0 0 0 4 12a5 5 0 0 0 5 5h8.5z"/><circle cx="18" cy="6" r="2.5"/></svg>
+          </div>
+          <span class="brand-name">Skycast</span>
+        </div>
+      </div>
+
+      <div class="search-wrap">
+        <div class="search">
+          <svg class="search-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          <input id="searchInput" type="text" placeholder="Search any city worldwide..." autocomplete="off" aria-label="Search city" />
+          <button class="search-clear" id="searchClear" aria-label="Clear" hidden>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          </button>
+        </div>
+        <ul class="autocomplete" id="autocomplete" role="listbox" hidden></ul>
+      </div>
+
+      <div class="topbar-right">
+        <div class="unit-toggle" role="group" aria-label="Temperature units">
+          <button data-unit="metric" class="unit-btn active" id="unitC">°C</button>
+          <button data-unit="imperial" class="unit-btn" id="unitF">°F</button>
+        </div>
+        <button class="icon-btn" id="locateBtn" aria-label="Use my location" title="Use my location">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
+        </button>
+        <button class="icon-btn" id="themeBtn" aria-label="Toggle theme" title="Toggle theme">
+          <svg id="themeIcon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Error -->
+    <div id="errorCard" class="error-card" hidden>
+      <div class="error-icon" aria-hidden="true">⚠️</div>
+      <div class="error-body">
+        <h3 id="errorTitle">Something went wrong</h3>
+        <p id="errorMessage">Please try again.</p>
+      </div>
+      <button class="btn-ghost" id="errorClose">Dismiss</button>
+    </div>
+
+    <!-- Alerts -->
+    <div class="alerts-container" id="alertsContainer" aria-live="polite"></div>
+
+    <!-- HERO -->
+    <section class="hero glass" id="heroSection" aria-label="Current weather">
+      <!-- Skeleton -->
+      <div class="hero-skeleton" id="heroSkeleton">
+        <div class="sk sk-line w-40"></div>
+        <div class="sk sk-line w-60 mt-8"></div>
+        <div class="sk sk-temp mt-24"></div>
+        <div class="sk sk-line w-30 mt-16"></div>
+      </div>
+
+      <div class="hero-content" id="heroContent" hidden>
+        <div class="hero-top">
+          <div>
+            <h1 class="city-name" id="cityName">—</h1>
+            <p class="city-meta">
+              <span id="countryName">—</span> · <span id="dateTime">—</span>
+            </p>
+          </div>
+          <div class="hero-actions">
+            <button class="icon-btn" id="favBtn" aria-label="Save to favorites" title="Save to favorites">
+              <svg id="favIcon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </button>
+            <button class="icon-btn" id="shareBtn" aria-label="Share weather" title="Share">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="hero-main">
+          <div class="hero-icon" id="heroIcon" aria-hidden="true">
+            <span class="wi wi-clear-day"></span>
+          </div>
+          <div class="hero-temp">
+            <span class="temp-value" id="tempValue">--</span>
+            <span class="temp-unit" id="tempUnit">°C</span>
+          </div>
+        </div>
+
+        <div class="hero-summary">
+          <span class="weather-desc" id="weatherDesc">—</span>
+          <span class="feels-like">Feels like <strong id="feelsLike">—</strong></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Detail cards -->
+    <section class="details-grid" id="detailsGrid" aria-label="Weather details">
+      <!-- Filled by JS -->
+    </section>
+
+    <!-- 5-day forecast -->
+    <section class="forecast-section" aria-label="5-day forecast">
+      <div class="section-head">
+        <h2>5-Day Forecast</h2>
+        <span class="section-sub">Daily high & low</span>
+      </div>
+      <div class="forecast-grid" id="forecastGrid"></div>
+    </section>
+
+    <!-- Hourly forecast -->
+    <section class="hourly-section" aria-label="Hourly forecast">
+      <div class="section-head">
+        <h2>Next 24 hours</h2>
+        <span class="section-sub">3-hour intervals</span>
+      </div>
+      <div class="hourly-scroll" id="hourlyScroll"></div>
+    </section>
+
+    <footer class="footer">
+      <p>Powered by OpenWeatherMap · Built with vanilla JS</p>
+    </footer>
+  </main>
+
+  <!-- Toast -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- Backdrop -->
+  <div class="backdrop" id="backdrop"></div>
+
+  <script src="js/config.js?v=1"></script>
+  <script src="js/storage.js?v=1"></script>
+  <script src="js/weatherService.js?v=1"></script>
+  <script src="js/ui.js?v=1"></script>
+  <script src="js/autocomplete.js?v=1"></script>
+  <script src="js/favorites.js?v=1"></script>
+  <script src="js/theme.js?v=1"></script>
+  <script src="js/location.js?v=1"></script>
+  <script src="js/app.js?v=1"></script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+/* Emoji-based weather icons (no external deps) */
+.wi { display: inline-block; line-height: 1; font-style: normal; }
+.wi-clear-day::before { content: "☀️"; }
+.wi-clear-night::before { content: "🌙"; }
+.wi-partly-day::before { content: "⛅"; }
+.wi-partly-night::before { content: "☁️"; }
+.wi-cloudy::before { content: "☁️"; }
+.wi-overcast::before { content: "🌥️"; }
+.wi-rain::before { content: "🌧️"; }
+.wi-drizzle::before { content: "🌦️"; }
+.wi-thunder::before { content: "⛈️"; }
+.wi-snow::before { content: "❄️"; }
+.wi-mist::before { content: "🌫️"; }
+.wi-wind::before { content: "💨"; }
+.wi-hot::before { content: "🔥"; }
+.wi-cold::before { content: "🧊"; }
