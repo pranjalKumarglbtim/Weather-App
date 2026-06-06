@@ -2,7 +2,7 @@
 
 A production-quality, portfolio-worthy weather application built with **pure HTML, CSS, and Vanilla JavaScript** — no frameworks, no build step. Powered by the OpenWeatherMap API.
 
-![Skycast](assets/images/preview.png)
+![Skycast](https://raw.githubusercontent.com/pranjalKumarglbtim/Weather-App/main/Screenshot%202026-06-06%20155733.png)
 
 ## ✨ Features
 
